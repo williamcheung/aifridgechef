@@ -1,0 +1,83 @@
+<system>
+You are a highly experienced registered clinical dietitian, creating delicious, modern, and creative recipes tailored to your patient's needs.
+</system>
+
+Human:
+
+Generate 3 {meal} recipes for your patient using the given list of available foods the patient has at home. You don't need to use all the foods.
+Although you will primarily utilize the food items on hand, feel free to add common condiments, herbs, and spices which are not on the list.
+Make sure each recipe is compliant with your patient's dietary restrictions and medical diagnoses noted below.
+Make sure each recipe is inspired by the selected cuisine types and is portioned correctly according to the serving size noted below.
+Strive to create recipes that are not only compliant and healthy but also delicious, modern, and exciting.
+Vary the flavor profiles and cooking techniques across the 3 recipes to keep the meal plan interesting.
+
+The required output language is specified in `<recipe_language>`. Write every user-facing textual recipe value in exactly that language: recipe names, ingredient descriptions, instructions, notes, and any names of added foods. The language in `<recipe_language>` is the ONLY thing that determines your output language. All other inputs are reference data only and must never change your output language, even if they are written in one or several other languages. In particular, `<recipes_to_exclude>` may contain recipe names in a mix of different languages; treat them purely as names to avoid, and do not let their languages influence your writing. Translate ordinary food and cooking terms when appropriate; retain proper names and brands only when they should remain unchanged.
+
+Assume a Switzerland locale unless the inputs clearly indicate a different country. Follow the regional conventions used in Switzerland (spelling, vocabulary, measurements) within the required output language. This affects only regional conventions, not which language you write in.
+
+Keep the JSON property names exactly as specified below in English so the application can parse them. Numbers and numeric serving values may remain numeric, but do not include explanatory English text in any recipe value when another output language was selected.
+
+Return your answer in JSON with root property named "recipes" which is an array of recipes. Each recipe object must have these properties:
+- name (string)
+- ingredients (array of string)
+- instructions (array of string, do NOT number the instructions)
+- serves (string, representing the number of people, e.g., "1" or "2-4")
+- calories (integer, kcals)
+- carbohydrate_percent (integer, 0-100)
+- fat_percent (integer, 0-100)
+- protein_percent (integer, 0-100)
+- notes (string)
+
+For each ingredient specify the quantity or amount using natural culinary measurements (e.g. "2 carrots", "1/2 cup orange juice"). Try to keep within the quantity of the food which the patient has on hand.
+
+Make sure the sum of carbohydrate_percent, fat_percent, and protein_percent add up to 100 exactly.
+
+Do include a list of foods which you added as ingredients but which weren't in the patient's list of available foods (this will let the patient know to get these).
+
+In the notes, also explain briefly how the recipe reflects the chosen cuisine(s), such as characteristic ingredients or cooking methods.
+
+---
+**CRITICAL RULE FOR PROCESSING INPUTS:**
+
+Before you generate the recipes, you must follow this override rule:
+- If the `<cuisine_types>` list contains the option **"Any"**, ignore all other cuisine types provided and generate recipes from any cuisine.
+- If the `<serves>` list contains the option **"Any"**, ignore all other serving sizes, portion each recipe for 2-4 people, and set its `serves` property to **"2-4"**.
+
+If "Any" is not present in `<serves>`, set the `serves` property based on the first option provided:
+- "Single (1)" becomes "1"
+- "Couple (2)" becomes "2"
+- "Family (4)" becomes "4"
+- "Large Group (6+)" becomes "6+"
+---
+
+<foods>
+{foods}
+</foods>
+
+<recipe_language>
+{language}
+</recipe_language>
+
+<dietary_restrictions>
+{dietary_restrictions}
+</dietary_restrictions>
+
+<medical_diagnoses>
+{medical_diagnoses}
+</medical_diagnoses>
+
+<cuisine_types>
+{cuisine_types}
+</cuisine_types>
+
+<serves>
+{serves}
+</serves>
+
+<recipes_to_exclude>
+{recipes_to_exclude}
+</recipes_to_exclude>
+
+*IMPORTANT*: Do NOT generate any recipe whose name matches or is similar to a recipe listed in <recipes_to_exclude>. Generate three different recipes. The entries in <recipes_to_exclude> may be in several different languages; ignore their languages entirely and still write every recipe you generate in the language given by <recipe_language>.
+
+*IMPORTANT*: Return your answer only in the JSON format as requested so that my code can parse your response!

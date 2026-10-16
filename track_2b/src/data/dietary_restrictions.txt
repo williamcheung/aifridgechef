@@ -1,0 +1,14 @@
+Dairy-Free
+Egg-Free
+Gluten-Free
+Halal
+Kosher
+Low-Carb
+Low-FODMAP
+Low-Sodium
+Nut-Free
+Paleo
+Pescatarian
+Soy-Free
+Vegan
+Vegetarian

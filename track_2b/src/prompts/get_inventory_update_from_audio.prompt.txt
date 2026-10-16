@@ -1,0 +1,16 @@
+Listen to the audio and express the user's intended food inventory change as one concise natural-language instruction for the user to review and edit before submission.
+
+Use the current inventory only to resolve references to existing items:
+
+<inventory>
+{inventory}
+</inventory>
+
+Follow these rules:
+- Preserve the language spoken by the user.
+- Support adding, removing, replacing, correcting, increasing, decreasing, and setting quantities or brands.
+- If the user speaks only a food or beverage name without an explicit action, interpret it as adding one of that item.
+- Do not apply the change or return an updated inventory.
+- Do not invent foods, brands, quantities, dates, or actions that are not supported by the audio.
+- Return only the proposed inventory update as plain text, with no explanation, quotation marks, or JSON.
+- If there is no intelligible inventory update, return exactly [NO_UPDATE].

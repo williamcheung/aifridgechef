@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Recipes</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 1em;
+            text-align: center;
+        }
+
+        .recipe-container h2 { /* Recipe Name */
+            color: #555;
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        .recipe-container h3 { /* Section titles like Ingredients, Instructions, Notes, Sources */
+            color: #666;
+            font-size: 1.2em;
+            margin-top: 1.5em; /* Space above section title */
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+
+        ul, ol {
+            padding-left: 30px; /* Standard padding for lists */
+        }
+
+        .recipe-container ul, .recipe-container ol { /* Specific padding for lists inside recipe container */
+            padding-left: 20px; /* Slightly less indent for lists within cards */
+        }
+
+        li {
+            margin-bottom: 0.5em;
+        }
+
+        p {
+            margin-bottom: 1em;
+        }
+
+        strong {
+            font-weight: bold;
+        }
+
+        a {
+            color: #007bff; /* Blue link color */
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .recipe-container {
+            background-color: #fffaf0; /* FloralWhite */
+            border: 1px solid #ddd;
+            padding: 20px 30px;
+            margin-bottom: 2em;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .footer-disclaimer {
+            margin-top: 3em;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+        }
+
+        /* --- Styles for Macronutrient Stacked Bar, Legend, and Calories --- */
+        .macro-section {
+            margin-top: 0.5em;
+            margin-bottom: 1.5em; /* This will be the space after the calories text */
+        }
+
+        .macro-bar-container {
+            display: flex;
+            width: 100%;
+            height: 25px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.8em;
+        }
+
+        .macro-bar-segment {
+            height: 100%;
+        }
+        .macro-bar-segment.carbs { background-color: rgba(54, 162, 235, 0.8); }
+        .macro-bar-segment.fat { background-color: rgba(255, 99, 132, 0.8); }
+        .macro-bar-segment.protein { background-color: rgba(75, 192, 192, 0.8); }
+
+        .macro-legend {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.9em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 10px; /* Space between legend and calories text */
+        }
+
+        .macro-legend li {
+            display: flex;
+            align-items: center;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
+
+        .legend-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .legend-color.carbs { background-color: rgba(54, 162, 235, 0.8); }
+        .legend-color.fat { background-color: rgba(255, 99, 132, 0.8); }
+        .legend-color.protein { background-color: rgba(75, 192, 192, 0.8); }
+
+        .recipe-calories-display { /* New style for calories text */
+            text-align: center;
+            font-size: 0.95em;
+            color: #444;
+            font-weight: bold; /* Make it a bit prominent */
+            margin-top: 0; /* margin-top handled by legend's margin-bottom */
+            margin-bottom: 0; /* margin-bottom handled by .macro-section's margin-bottom */
+        }
+        /* --- End Styles for Macronutrient Section --- */
+    </style>
+</head>
+<body>
+    {% if recipes %}
+        {% for recipe in recipes %}
+        <div class="recipe-container" id="{{ recipe.name | lower | replace(' ', '-') | replace(',', '') | replace("'", '') }}">
+            <h2>{{ recipe.name }}</h2>
+
+            {# --- Macronutrient & Calories Section --- #}
+            {% set carb_p = recipe.carbohydrate_percent|default(0)|int %}
+            {% set fat_p = recipe.fat_percent|default(0)|int %}
+            {% set protein_p = recipe.protein_percent|default(0)|int %}
+            {% set total_macros_percent = carb_p + fat_p + protein_p %}
+
+            {% if total_macros_percent > 0 or recipe.calories %} {# Show section if there's macro data OR calorie data #}
+            <div class="macro-section">
+                {% if total_macros_percent > 0 %}
+                <div class="macro-bar-container" role="img" aria-label="{{ labels.macro_breakdown }}: {{ labels.carbohydrates }} {{ carb_p }}%, {{ labels.fat }} {{ fat_p }}%, {{ labels.protein }} {{ protein_p }}%">
+                    {% if carb_p > 0 %}
+                    <div class="macro-bar-segment carbs" style="width: {{ carb_p }}%;" title="{{ labels.carbohydrates }}: {{ carb_p }}%"></div> {# Changed to int #}
+                    {% endif %}
+                    {% if fat_p > 0 %}
+                    <div class="macro-bar-segment fat" style="width: {{ fat_p }}%;" title="{{ labels.fat }}: {{ fat_p }}%"></div> {# Changed to int #}
+                    {% endif %}
+                    {% if protein_p > 0 %}
+                    <div class="macro-bar-segment protein" style="width: {{ protein_p }}%;" title="{{ labels.protein }}: {{ protein_p }}%"></div> {# Changed to int #}
+                    {% endif %}
+                </div>
+                <ul class="macro-legend">
+                    {% if carb_p > 0 %}<li><span class="legend-color carbs"></span>{{ labels.carbohydrates }}: {{ carb_p }}%</li>{% endif %} {# Changed to int #}
+                    {% if fat_p > 0 %}<li><span class="legend-color fat"></span>{{ labels.fat }}: {{ fat_p }}%</li>{% endif %} {# Changed to int #}
+                    {% if protein_p > 0 %}<li><span class="legend-color protein"></span>{{ labels.protein }}: {{ protein_p }}%</li>{% endif %} {# Changed to int #}
+                </ul>
+                {% endif %}
+
+                {% if recipe.calories %}
+                <p class="recipe-calories-display">{{ recipe.calories|int }} {{ labels.calories }}</p> {# Calories display #}
+                {% endif %}
+            </div>
+            {% endif %}
+            {# --- End Macronutrient & Calories Section --- #}
+
+            <h3>{{ labels.ingredients }}</h3>
+            <ul>
+                {% for ingredient in recipe.ingredients %}
+                <li>{{ ingredient }}</li>
+                {% endfor %}
+            </ul>
+
+            <h3>{{ labels.instructions }}</h3>
+            <ol>
+                {% for instruction in recipe.instructions %}
+                <li>{{ instruction }}</li>
+                {% endfor %}
+            </ol>
+
+            {% if recipe.serves %}
+            <p><strong>{{ labels.serves }}</strong> {{ recipe.serves }}</p>
+            {% endif %}
+
+            {% if recipe.notes %}
+            <p><strong>{{ labels.notes }}</strong> {{ recipe.notes }}</p>
+            {% endif %}
+
+            {% if recipe.sources and recipe.sources|length > 0 %}
+            <h3>{{ labels.inspirations }}</h3>
+            <ul>
+                {% for source_item in recipe.sources %}
+                <li><a href="{{ source_item.url }}" target="_blank" rel="noopener noreferrer">{{ source_item.title }}</a></li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p style="text-align: center; color: #777;">{{ labels.no_recipes }}</p>
+    {% endif %}
+
+    {% if disclaimer %}
+    <div class="footer-disclaimer">
+        <p><strong>{{ labels.disclaimer }}</strong> {{ disclaimer }}</p>
+    </div>
+    {% endif %}
+</body>
+</html>

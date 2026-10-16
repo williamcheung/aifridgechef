@@ -1,0 +1,223 @@
+Any
+Swiss
+Swiss - German-speaking Switzerland
+Swiss - French-speaking Switzerland (Romandy)
+Swiss - Italian-speaking Switzerland (Ticino)
+Swiss - Romansh and Graubünden (Grisons)
+Swiss - Bernese
+Swiss - Zürich
+Swiss - Basel
+Swiss - Central Switzerland
+Swiss - Eastern Switzerland
+Swiss - Valais
+Swiss - Vaud
+Swiss - Fribourg
+Swiss - Geneva
+Swiss - Jura
+American
+American - Appalachian
+American - Barbecue
+American - Cajun
+American - Californian
+American - Creole
+American - Floribbean
+American - Hawaiian
+American - Lowcountry
+American - Mid-Atlantic
+American - Midwestern
+American - New American
+American - New England
+American - Pacific Northwest
+American - Pennsylvania Dutch
+American - Soul Food
+American - Southern
+American - Southwestern
+American - Tex-Mex
+Abruzzese
+African
+Alsatian
+Andhra
+Anhui
+Argentinian
+Asian
+Assamese
+Austrian
+Awadhi
+Baja
+Balkan
+Balti
+Basque
+Belarusian
+Belgian
+Belizean
+Bengali
+Bihari
+Brazilian
+British
+Bulgarian
+Burmese
+Calabrian
+Cambodian
+Campanian
+Canadian
+Cantonese
+Caribbean
+Central American
+Central Asian
+Central European
+Central Indian
+Chettinad
+Chilean
+Chinese
+Colombian
+Croatian
+Cuban
+Czech
+Danish
+Deli
+Dutch
+East African
+East Asian
+Eastern European
+Egyptian
+Emilian
+English
+Ethiopian
+European
+Filipino
+Finnish
+French
+Friulian
+Fujian
+Fusion
+Galician
+Georgian
+German
+Goan
+Greek
+Gujarati
+Haitian
+Hunan
+Hungarian
+Hyderabadi
+Icelandic
+Indian
+Indonesian
+Irish
+Israeli
+Italian
+Jamaican
+Japanese
+Jewish
+Jiangsu
+Kashmiri
+Kazakh
+Kerala
+Korean
+Kurdish
+Laotian
+Latin American
+Latvian
+Lazio
+Lebanese
+Libyan
+Liguria
+Lithuanian
+Lombard
+Lyonnaise
+Maharashtrian
+Malaysian
+Maltese
+Mangalorean
+Marche
+Mediterranean
+Mexican
+Middle Eastern
+Molise
+Mongolian
+Moroccan
+Mughlai
+Mumbai
+Napoletana
+Native American
+Nepali
+New Zealand
+Nigerian
+Nordic
+North African
+North American
+North Asian
+North Indian
+Northeastern Indian
+Northern European
+Norwegian
+Oaxacan
+Oceanic
+Oriya
+Pakistani
+Parsi
+Persian
+Peruvian
+Piedmont
+Poblano
+Polish
+Polynesian
+Portuguese
+Pugliese
+Punjabi
+Qatari
+Rajasthani
+Roman
+Romagnan
+Romanian
+Russian
+Salvadoran
+Sammarinese
+Sardinian
+Scandinavian
+Scottish
+Senegalese
+Serbian
+Shandong
+Sichuan
+Sicilian
+Singaporean
+Slovak
+Slovenian
+Somali
+South African
+South American
+South Asian
+South Indian
+Southeast Asian
+Southern African
+Southern European
+Spanish
+Sri Lankan
+Sudanese
+Swedish
+Syrian
+Taiwanese
+Tamil
+Thai
+Tibetan
+Trentino-Alto Adige
+Tunisian
+Turkish
+Tuscan
+Ukrainian
+Umbrian
+Uruguayan
+Valencian
+Venetian
+Venezuelan
+Vietnamese
+Welsh
+West African
+West Indian
+Western European
+Xinjiang
+Yemeni
+Yucatan
+Zhejiang
+Zimbabwean

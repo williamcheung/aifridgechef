@@ -1,0 +1,31 @@
+Anemia
+Arthritis
+Asthma
+Celiac Disease
+Diabetes (Type 1)
+Diabetes (Type 2)
+Digestive Issues
+Diverticulitis
+Egg Allergy
+Fatty Liver Disease (NAFLD/NASH)
+Fish Allergy
+GERD (Gastroesophageal Reflux Disease)
+Gout
+Heart Disease
+High Blood Pressure
+High Cholesterol
+Hyperlipidemia
+Hypertension
+Hypothyroidism
+Kidney Stones
+Lactose Intolerance
+Milk Allergy
+Osteoporosis
+Peanut Allergy
+Prediabetes
+Renal Disease
+Shellfish Allergy
+Soy Allergy
+Tree Nut Allergy
+Underweight
+Wheat Allergy

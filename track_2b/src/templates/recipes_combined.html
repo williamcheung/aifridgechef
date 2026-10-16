@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book_title }}</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px 40px; /* Added more horizontal padding */
+            background-color: #fff; /* Ensuring white page background */
+        }
+        #top-anchor { /* Invisible anchor for back-to-top */
+            display: block;
+            position: relative;
+            top: -50px; /* Adjust if fixed header */
+            visibility: hidden;
+        }
+        .book-title {
+            color: #c0392b;
+            font-size: 2.8em;
+            margin-bottom: 0.5em;
+            text-align: center;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 0.5em;
+        }
+        .table-of-contents {
+            background-color: #f8f9fa; /* Light background for TOC */
+            border: 1px solid #e9ecef;
+            padding: 15px 25px;
+            margin-bottom: 2.5em;
+            border-radius: 8px;
+        }
+        .table-of-contents h2 {
+            font-size: 1.6em;
+            color: #c0392b;
+            margin-top: 0;
+            margin-bottom: 0.8em;
+        }
+        .table-of-contents ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .table-of-contents li {
+            margin-bottom: 0.6em;
+        }
+        .table-of-contents ul ul {
+            padding-left: 1.5em;
+            margin-top: 0.3em;
+        }
+        .table-of-contents ul ul li {
+            margin-bottom: 0.3em;
+        }
+        .table-of-contents ul ul a {
+            font-size: 0.95em;
+            font-style: normal;
+            color: #555;
+        }
+        .table-of-contents a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 1.1em;
+            font-style: italic;
+        }
+        .table-of-contents a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+
+        .meal-section {
+            margin-bottom: 3em;
+            padding-top: 1em; /* Space for section title if it's directly above */
+            border-top: 1px dashed #ccc; /* Separator between meal sections */
+        }
+        .meal-section:first-of-type {
+            border-top: none; /* No top border for the very first section */
+        }
+
+        .section-header, .section-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5em; /* Space after header */
+        }
+
+        .section-footer {
+            margin-top: 2em;
+            padding: 1em 0;
+            text-align: center;
+        }
+        .section-footer span { /* Style for the "End of..." text */
+            color: #777;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        .section-header h2, .meal-section > h2 { /* Catches h2 if placed directly in meal-section too */
+            color: #c0392b; /* A warm recipe-like color for section titles */
+            font-size: 2em;
+            margin-top: 0.5em;
+            margin-bottom: 0; /* Handled by section-header margin */
+        }
+        .back-to-top {
+            font-size: 0.9em;
+            color: #007bff;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: 1px solid #007bff;
+            border-radius: 4px;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .back-to-top:hover {
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* --- Styles for Individual Recipe Containers --- */
+        .recipe-container {
+            background-color: #fffaf0; /* FloralWhite for all recipe containers */
+            border: 1px solid #ddd;
+            padding: 20px 30px;
+            margin-bottom: 2em;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+
+        .recipe-container h2 { /* This is the recipe name within the card */
+            color: #555;
+            font-size: 1.8em;
+            margin-top: 0;
+            margin-bottom: 0.5em;
+        }
+
+        /* --- Styles for Macronutrient Stacked Bar, Legend, and Calories WITHIN a recipe-container --- */
+        .recipe-container .macro-section { /* Scoped to be within recipe-container if needed, or can be global */
+            margin-top: 0.5em;
+            margin-bottom: 1.5em;
+        }
+
+        .recipe-container .macro-bar-container {
+            display: flex;
+            width: 100%;
+            height: 25px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 0.8em;
+        }
+
+        .recipe-container .macro-bar-segment {
+            height: 100%;
+        }
+        .recipe-container .macro-bar-segment.carbs { background-color: rgba(54, 162, 235, 0.8); }
+        .recipe-container .macro-bar-segment.fat { background-color: rgba(255, 99, 132, 0.8); }
+        .recipe-container .macro-bar-segment.protein { background-color: rgba(75, 192, 192, 0.8); }
+
+        .recipe-container .macro-legend {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.9em;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            align-items: baseline;
+            margin-bottom: 10px; /* Space between legend and calories text */
+        }
+
+        .recipe-container .macro-legend li {
+            display: flex;
+            align-items: center;
+            line-height: 1.3;
+            white-space: nowrap;
+        }
+
+        .recipe-container .legend-color {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 8px;
+            border-radius: 3px;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .recipe-container .legend-color.carbs { background-color: rgba(54, 162, 235, 0.8); }
+        .recipe-container .legend-color.fat { background-color: rgba(255, 99, 132, 0.8); }
+        .recipe-container .legend-color.protein { background-color: rgba(75, 192, 192, 0.8); }
+
+        .recipe-container .recipe-calories-display {
+            text-align: center;
+            font-size: 0.95em;
+            color: #444;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+        /* --- End Styles for Macronutrient Section --- */
+
+        .recipe-container h3 { /* Ingredients, Instructions */
+            color: #666;
+            font-size: 1.2em;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.3em;
+        }
+        .recipe-container ul, .recipe-container ol {
+            padding-left: 20px;
+        }
+        .recipe-container li {
+            margin-bottom: 0.5em;
+        }
+        .recipe-container p {
+            margin-bottom: 1em;
+        }
+        .recipe-container strong {
+            font-weight: bold;
+        }
+        /* --- End Styles for Individual Recipe Containers --- */
+
+        .footer-disclaimer {
+            margin-top: 3em;
+            padding: 15px;
+            background-color: #f0f0f0;
+            border-top: 1px solid #ddd;
+            font-size: 0.9em;
+            color: #555;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="top-anchor"></div>
+    <h1 class="book-title">{{ book_title }}</h1>
+
+    {% if sections %}
+    <div class="table-of-contents">
+        <h2>{{ labels.table_of_contents }}</h2>
+        <ul>
+            {% for section in sections %}
+            <li>
+                <a href="#{{ section.id }}">{{ section.title }}</a>
+                {% if section.recipe_names %}
+                <ul>
+                    {% for name in section.recipe_names %}
+                    <li><a href="#{{ name | lower | replace(' ', '-') | replace(',', '') | replace("'", '') }}">{{ name }}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% for section in sections %}
+    <section id="{{ section.id }}" class="meal-section">
+        <div class="section-header">
+            <h2>{{ section.title }}</h2>
+            <a href="#top-anchor" class="back-to-top">{{ labels.back_to_top }}</a>
+        </div>
+
+        {# The extracted HTML for recipe containers will be injected here #}
+        {# This HTML is assumed to come from rendering the INDIVIDUAL recipe template #}
+        {# which already includes the macro bar, legend, and calorie structures. #}
+        {{ section.html_content | safe }}
+
+        <div class="section-footer">
+            <span>{{ labels.end_of }} {{ section.title }}</span>
+            <a href="#top-anchor" class="back-to-top">{{ labels.back_to_top }}</a>
+        </div>
+    </section>
+    {% endfor %}
+    {% else %}
+    <p>{{ labels.no_recipes_book }}</p>
+    {% endif %}
+
+    {% if disclaimer %}
+    <div class="footer-disclaimer">
+        <p><strong>{{ labels.disclaimer }}</strong> {{ disclaimer }}</p>
+    </div>
+    {% endif %}
+
+</body>
+</html>
